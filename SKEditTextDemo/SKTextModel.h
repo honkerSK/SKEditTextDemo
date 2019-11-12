@@ -2,8 +2,8 @@
 //  SKTextModel.h
 //  xiangwan
 //
-//  Created by kent on 2019/8/27.
-//  Copyright © 2019 mac. All rights reserved.
+//  Created by KentSun on 2019/8/27.
+//  Copyright © 2019 KentSun. All rights reserved.
 //
 
 // SKEditTextCell 对应模型

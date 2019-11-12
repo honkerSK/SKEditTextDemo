@@ -2,7 +2,7 @@
 //  SKEditTextCell.m
 //  SKEditActivity
 //
-//  Created by mac on 2019/8/21.
+//  Created by KentSun on 2019/8/21.
 //  Copyright © 2019 KentSun. All rights reserved.
 //
 
@@ -37,6 +37,13 @@ static int const wordCountAll = 3000; //限制总字数
 @end
 
 @implementation SKEditTextCell
+
+- (void)setIsSkFirstResponder:(BOOL)isSkFirstResponder{
+    _isSkFirstResponder = isSkFirstResponder;
+    if (isSkFirstResponder) {
+        [self.textView becomeFirstResponder];
+    }
+}
 
 //每次编辑结束后都要全局刷新
 - (void)setTextModel:(SKTextModel *)textModel{

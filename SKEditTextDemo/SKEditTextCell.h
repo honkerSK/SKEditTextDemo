@@ -2,7 +2,7 @@
 //  SKEditTextCell.h
 //  SKEditActivity
 //
-//  Created by mac on 2019/8/21.
+//  Created by KentSun on 2019/8/21.
 //  Copyright © 2019 KentSun. All rights reserved.
 //
 
@@ -31,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //模拟模型
 @property (nonatomic, strong) SKTextModel *textModel;
-
+// 是否为第一响应者
+@property (nonatomic ,assign) BOOL isSkFirstResponder;
 
 @end
 

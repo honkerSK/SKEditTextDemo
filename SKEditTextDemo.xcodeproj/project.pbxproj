@@ -40,6 +40,7 @@
 		046C0CCC2378F9A900168D4E /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 046C0CBF2378F9A900168D4E /* MJPropertyKey.m */; };
 		046C0CCD2378F9A900168D4E /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 046C0CC32378F9A900168D4E /* MJFoundation.m */; };
 		046C0CD0237910EC00168D4E /* UIView+SKContinueFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 046C0CCF237910EC00168D4E /* UIView+SKContinueFirstResponder.m */; };
+		046C0CD623794C3400168D4E /* SKMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 046C0CD523794C3400168D4E /* SKMainVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,8 @@
 		046C0CC32378F9A900168D4E /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
 		046C0CCE237910EC00168D4E /* UIView+SKContinueFirstResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SKContinueFirstResponder.h"; sourceTree = "<group>"; };
 		046C0CCF237910EC00168D4E /* UIView+SKContinueFirstResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SKContinueFirstResponder.m"; sourceTree = "<group>"; };
+		046C0CD423794C3400168D4E /* SKMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMainVC.h; sourceTree = "<group>"; };
+		046C0CD523794C3400168D4E /* SKMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMainVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,8 @@
 				046C0C872378F76800168D4E /* Masonry */,
 				046C0C802378F64300168D4E /* NSString (Extension) */,
 				046C0C7C2378F43E00168D4E /* UIView (Extension) */,
+				046C0CD423794C3400168D4E /* SKMainVC.h */,
+				046C0CD523794C3400168D4E /* SKMainVC.m */,
 				046C0C7A2378F38400168D4E /* SKEditActivityVC.h */,
 				046C0C792378F38400168D4E /* SKEditActivityVC.m */,
 				046C0C732378F36200168D4E /* SKEditTextCell.h */,
@@ -442,6 +447,7 @@
 				046C0C512378F32800168D4E /* main.m in Sources */,
 				046C0CAD2378F89E00168D4E /* SKActivity.m in Sources */,
 				046C0CA62378F76800168D4E /* NSArray+MASAdditions.m in Sources */,
+				046C0CD623794C3400168D4E /* SKMainVC.m in Sources */,
 				046C0CCC2378F9A900168D4E /* MJPropertyKey.m in Sources */,
 				046C0C432378F32500168D4E /* AppDelegate.m in Sources */,
 				046C0CAA2378F76800168D4E /* MASViewAttribute.m in Sources */,

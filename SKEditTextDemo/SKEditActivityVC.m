@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
 @property (nonatomic ,weak) UIView *bottomView;
 @property (nonatomic ,weak) UIButton *nextBtn;
 
-///保存所有文字总字数字典(indexPath : @"每个cell字数")
+///保存所有文字总字数字典 { SKTextModel%@ : @"每个cell字数" }
 @property (nonatomic, strong) NSMutableDictionary *wordTotalDict;
 ///获取所有总字数
 @property (nonatomic, assign) NSInteger wordTotal;
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
         [self insetText:nil];
         return;
     }
-    //判断是否有空的输入文本框, 并选中
+    
     NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:content.count];
     for (NSDictionary *dict in content) {
         NSInteger type = [dict[@"type"] integerValue];
@@ -189,8 +189,12 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
     [nextBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     nextBtn.titleLabel.font = FONTBOLDSIZE(16);
     nextBtn.layer.borderWidth = 2;
-    nextBtn.layer.borderColor = [UIColor greenColor].CGColor;
+//    nextBtn.layer.borderColor = [UIColor greenColor].CGColor;
     nextBtn.layer.cornerRadius = 20;
+    nextBtn.enabled = NO;
+    nextBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [nextBtn addTarget:self action:@selector(nextBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
     [nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(8);
         make.right.mas_equalTo(-16);
@@ -277,7 +281,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
         textModel.upBtnEnable = (indexPath.row == 0)? NO: YES;
         textModel.downBtnEnable = (indexPath.row == self.dataSource.count - 1)? NO: YES;
         
-        textModel.wordTotal = self.wordTotal;//每次刷新 模型赋值总字数
+        textModel.wordTotal = self.wordTotal; //每次刷新 模型赋值总字数
         NSString *identifierModel = textModel.identifierModel;
         textModel.textNum = [self.wordTotalDict[identifierModel] integerValue]; //取出对应字数
         //如果只有一个SKEditTextCell, 置灰删除按钮
@@ -309,6 +313,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
 //            [weakSelf.tableView reloadData];
 //            sender.enabled = YES;
 //            [weakSelf verifyNextBtn];
+            
             //方案二:
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
@@ -337,7 +342,6 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
             }];
         };
         
-        
         //将要开始编辑,滚动到对应cell
         textCell.textViewShouldBeginEditingBlock = ^(SKEditTextCell * _Nonnull cell) {
 //        [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -353,7 +357,6 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
 //            [weakSelf verifyInsetTextBtn];
             [weakSelf.tableView reloadData];
             [weakSelf verifyNextBtn];
-
         };
         
         textCell.maxTextLengthBlock = ^(BOOL isEnable) {
@@ -483,6 +486,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
 }
 
 
+#pragma mark cell上下交换动画
 /**
  cell上下交换动画
 
@@ -513,6 +517,7 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
     }];
     
 }
+
 
 
 #pragma mark ================== 响应处理 ======================
@@ -554,6 +559,25 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
     WeakSelf
     [self.view endEditing:YES];
     
+    //验证是否有空的SKEditTextCell
+    int i = 0;
+    for (SKTextModel *textModel  in self.dataSource) {
+        NSString *content = textModel.content;
+        if (content.length == 0) {
+            NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:i inSection:0];
+            SKEditTextCell *cell = (SKEditTextCell *)[self.tableView cellForRowAtIndexPath:currentIndex];
+            if (cell == nil) {
+                [self.tableView scrollToRowAtIndexPath:currentIndex atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                SKEditTextCell *currentCell = (SKEditTextCell *)[self.tableView cellForRowAtIndexPath:currentIndex];
+                currentCell.isSkFirstResponder = YES;
+            }else{
+                cell.isSkFirstResponder = YES;
+            }
+            return;
+        }
+        i++;
+    }
+    
     SKTextModel *textModel = [[SKTextModel alloc] init];
     textModel.upBtnEnable = YES;
     textModel.downBtnEnable = YES;
@@ -570,16 +594,12 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
     textModel.identifierModel = [NSString stringWithFormat:@"SKTextModel%@", timeString];
     
     textModel.wordTotal = self.wordTotal;
-    //插入新的textCell 插入按钮不响应
-//    self.insetTextBtn.enabled = NO;
-    
+ 
     // 向数据源中添加数据
-    [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     
 }
-
-
 
 
 #pragma mark 校验是否打开nextbtn
@@ -590,48 +610,31 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
     BOOL nextBtnEnable;
     if (weakSelf.dataSource.count == 0){ //没有子控件
         nextBtnEnable = NO;
-        weakSelf.nextBtn.selected = nextBtnEnable;
         weakSelf.nextBtn.enabled = nextBtnEnable;
+        weakSelf.nextBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
         return;
     }
-    
-//    BOOL picEnable = NO;
-//    int picFailNum = 0; //上传失败图片数
-//    int picNum = 0; //图片总数c
-//    for (NSObject *obj in self.dataSource) {
-//        if([obj isKindOfClass:[SKPicModel class]]){
-//            picNum++;
-//            SKPicModel *picModel = (SKPicModel *)obj;
-//            if (picModel.uploadPicType == SKUploadPicTypeFail || picModel.uploadPicType == SKUploadPicTypeLoading) {
-//                picFailNum++;
-//            }
-//        }
-//    }
-    
-//    if (picFailNum > 0) { //有未上传图片
-//        picEnable = NO;
-//    }else{ // picFailNum = 0 分两种情况: 没有图片和有图片
-//        picEnable = picNum > 0 ? YES : NO;
-//    }
     
     //判断 总字数是否大于2 && 有没有超总字数
     BOOL textEnable = (weakSelf.wordTotal >= 2) && (weakSelf.wordTotal <= wordCountAll);
     nextBtnEnable = textEnable ;
     weakSelf.nextBtn.enabled = nextBtnEnable;
+    weakSelf.nextBtn.layer.borderColor = nextBtnEnable ?[UIColor greenColor].CGColor:[UIColor lightGrayColor].CGColor;
+
+}
+
+/// 保存弹窗
+- (void)saveAlert{
+    NSLog(@"点击保存按钮");
+    [self.navigationController popToRootViewControllerAnimated:NO];
     
 }
 
-#pragma mark 校验是否打开插入文本(未使用)
-//- (void)verifyInsetTextBtn{
-//    __block BOOL verifyInsetText = YES;
-//    [self.wordTotalDict enumerateKeysAndObjectsUsingBlock:^(id  key, NSString * obj, BOOL * _Nonnull stop) {
-//        if ([obj integerValue] == 0) {
-//            verifyInsetText = NO;
-//            *stop = YES;
-//        }
-//    }];
-//    self.insetTextBtn.enabled = verifyInsetText;
-//}
+/// 点击下一步按钮
+- (void)nextBtnClick{
+    NSLog(@"点击下一步按钮");
+}
+
 
 
 #pragma mark ================== 监听键盘弹出 ======================
@@ -676,15 +679,6 @@ typedef NS_ENUM(NSInteger, SKExchangeCellAnimationType) {
         }
     }];
     return tempArrM;
-}
-
-
-
-/// 保存弹窗
-- (void)saveAlert{
-    NSLog(@"点击保存按钮");
-    [self.navigationController popToRootViewControllerAnimated:NO];
-
 }
 
 
