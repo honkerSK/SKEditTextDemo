@@ -2,8 +2,8 @@
 //  SKEditActivityVC.h
 //  xiangwan
 //
-//  Created by mac on 2019/8/21.
-//  Copyright © 2019 mac. All rights reserved.
+//  Created by KentSun on 2019/8/21.
+//  Copyright © 2019 KentSun. All rights reserved.
 //
 // 编辑活动控制器 
 #import <UIKit/UIKit.h>

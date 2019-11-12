@@ -1,9 +1,9 @@
 //
 //  NSString+Size.m
-//  CQ_App
+//  SKEditTextDemo
 //
-//  Created by Nemo on 2019/4/10.
-//  Copyright © 2019年 mac. All rights reserved.
+//  Created by KentSun on 2019/4/10.
+//  Copyright © 2019年 KentSun. All rights reserved.
 //
 
 #import "NSString+Size.h"

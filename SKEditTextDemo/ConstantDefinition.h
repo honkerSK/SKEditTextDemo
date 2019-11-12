@@ -1,9 +1,9 @@
 //
 //  ConstantDefinition.h
-//  CQ_App
+//  SKEditTextDemo
 //
-//  Created by mac on 2019/3/21.
-//  Copyright © 2019年 mac. All rights reserved.
+//  Created by KentSun on 2019/3/21.
+//  Copyright © 2019年 KentSun. All rights reserved.
 //
 
 #ifndef ConstantDefinition_h

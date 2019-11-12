@@ -1,6 +1,6 @@
 //
 //  SKTextModel.m
-//  xiangwan
+//  SKEditTextDemo
 //
 //  Created by KentSun on 2019/8/27.
 //  Copyright © 2019 KentSun. All rights reserved.

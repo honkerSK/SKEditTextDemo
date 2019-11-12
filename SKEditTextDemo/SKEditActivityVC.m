@@ -2,8 +2,8 @@
 //  SKEditActivityVC.m
 //  xiangwan
 //
-//  Created by mac on 2019/8/21.
-//  Copyright © 2019 mac. All rights reserved.
+//  Created by KentSun on 2019/8/21.
+//  Copyright © 2019 KentSun. All rights reserved.
 //
 
 /*
@@ -20,24 +20,12 @@
 
 #import "SKEditActivityVC.h"
 
-//Manager
-
-//controller
-
-//view
-
 //cell
 #import "SKEditTextCell.h"
-
 //model
 #import "SKActivity.h"
 #import "SKTextModel.h"
-
 //Vendors
-//#import "SerialTaskManager.h"
-//#import "NMToast.h"
-//#import "UIButton+Extension.h"
-//#import "UIImage+Extension.h"
 #import "UIView+SKContinueFirstResponder.h"
 
 static NSString *const editTextCellId = @"SKEditTextCell";
