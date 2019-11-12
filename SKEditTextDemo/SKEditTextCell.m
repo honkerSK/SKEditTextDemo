@@ -157,9 +157,8 @@ static int const wordCountAll = 3000; //限制总字数
     [textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(upBtn.mas_bottom);
         make.left.mas_equalTo(16);
-        make.right.mas_equalTo(-16);
+        make.width.mas_equalTo(nScreenWidth()-16*2);
         make.height.mas_equalTo(textViewH);
-//        make.bottom.equalTo(weakSelf.contentView).offset(-16).priority(MASLayoutPriorityDefaultLow);
     }];
     [self addBorderToLayer:textView]; //画虚线框
 
